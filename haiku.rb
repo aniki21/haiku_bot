@@ -25,7 +25,7 @@ def syllable_count(w)
 end
 
 def syllables(sentence="")
-  words = sentence.gsub(/\W+/," ").split(" ")
+  words = sentence.gsub(/'/,"").gsub(/\W+/," ").split(" ")
   haiku = true
   count = 0
   line_syll = 0
