@@ -12,6 +12,9 @@ CONFIG = YAML.load_file(File.join(__dir__,"config.yml"))
 # Methods
 # --------------------------------------------------------- #
 
+# Count syllables in a word
+# Based on this StackOverflow answer by Pesto:
+#	http://stackoverflow.com/a/1272072/245447
 def syllable_count(w)
   word = "#{w}"
   word.downcase!
@@ -23,11 +26,8 @@ end
 
 def syllables(sentence="")
   words = sentence.gsub(/\W+/," ").split(" ")
-
-haiku = true
-
+  haiku = true
   count = 0
-
   line_syll = 0
   line = 0
   lengths = [5,7,5]
@@ -46,9 +46,7 @@ haiku = true
       line_syll = 0 # reset the counter
     end
   end
-
   haiku = haiku && count == 17
-
   return OpenStruct.new({ syllables: count, words: words, haiku: haiku, lines: lines })
 end
 
