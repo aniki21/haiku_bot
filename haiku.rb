@@ -15,9 +15,8 @@ CONFIG = YAML.load_file(File.join(__dir__,"config.yml"))
 # Count syllables in a word
 # Based on this StackOverflow answer by Pesto:
 #	http://stackoverflow.com/a/1272072/245447
-def syllable_count(w)
-  word = "#{w}"
-  word.downcase!
+def syllable_count(word)
+  word = word.downcase
   return 1 if word.length <= 3
   word.sub!(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
   word.sub!(/^y/, '')
@@ -50,23 +49,12 @@ def syllables(sentence="")
   return OpenStruct.new({ syllables: count, words: words, haiku: haiku, lines: lines })
 end
 
-def haiku(sentence="")
-  message = syllables(sentence)
-  if message.haiku
-    message.lines.each do |line|
-      puts line.join(" ")
-    end
-  else
-    # nothing
-  end
-end
-
 # --------------------------------------------------------- #
 # Bot
 # --------------------------------------------------------- #
 
 # Login
-bot = Discordrb::Bot.new token: CONFIG["token"], application_id: CONFIG["application_id"]
+bot = Discordrb::Bot.new(token: CONFIG["token"], application_id: CONFIG["application_id"])
 
 # Startup
 bot.ready() do |event|
